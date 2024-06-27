@@ -13,7 +13,7 @@ $status = (isset($_POST['status'])) ? $_POST['status'] : '';
 
 $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
 $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
-
+$data = array(); // Asegurar que $data esté definida
 
 switch($opcion){
     case 1:
@@ -47,6 +47,9 @@ switch($opcion){
         $resultado->execute();        
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;
+    default:
+    $data = array("error" => "Opción no válida"); // Manejar opciones no válidas
+    break;
 }
 
 print json_encode($data, JSON_UNESCAPED_UNICODE);//envio el array final el formato json a AJAX
