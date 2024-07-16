@@ -12,31 +12,46 @@ class Usuario {
 
     public function crearUsuario($username, $first_name, $last_name, $gender, $password, $status) {
         $consulta = "INSERT INTO tb_usuarios (username, first_name, last_name, gender, password, status)
-                     VALUES('$username', '$first_name', '$last_name', '$gender', '$password', '$status')";			
+                     VALUES(:username, :first_name, :last_name, :gender, :password, :status)";
         $resultado = $this->conexion->prepare($consulta);
+        $resultado->bindParam(':username', $username);
+        $resultado->bindParam(':first_name', $first_name);
+        $resultado->bindParam(':last_name', $last_name);
+        $resultado->bindParam(':gender', $gender);
+        $resultado->bindParam(':password', $password);
+        $resultado->bindParam(':status', $status);
         $resultado->execute();
 
         $consulta = "SELECT * FROM tb_usuarios ORDER BY user_id DESC LIMIT 1";
         $resultado = $this->conexion->prepare($consulta);
         $resultado->execute();
-        return $resultado->fetchAll(PDO::FETCH_ASSOC);       
+        return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function actualizarUsuario($user_id, $username, $first_name, $last_name, $gender, $password, $status) {
-        $consulta = "UPDATE tb_usuarios SET username='$username', first_name='$first_name', last_name='$last_name', gender='$gender', password='$password', status='$status'
-                     WHERE user_id='$user_id'";		
+        $consulta = "UPDATE tb_usuarios SET username = :username, first_name = :first_name, last_name = :last_name, 
+                     gender = :gender, password = :password, status = :status WHERE user_id = :user_id";
         $resultado = $this->conexion->prepare($consulta);
+        $resultado->bindParam(':user_id', $user_id);
+        $resultado->bindParam(':username', $username);
+        $resultado->bindParam(':first_name', $first_name);
+        $resultado->bindParam(':last_name', $last_name);
+        $resultado->bindParam(':gender', $gender);
+        $resultado->bindParam(':password', $password);
+        $resultado->bindParam(':status', $status);
         $resultado->execute();
 
-        $consulta = "SELECT * FROM tb_usuarios WHERE user_id='$user_id'";
+        $consulta = "SELECT * FROM tb_usuarios WHERE user_id = :user_id";
         $resultado = $this->conexion->prepare($consulta);
+        $resultado->bindParam(':user_id', $user_id);
         $resultado->execute();
         return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function eliminarUsuario($user_id) {
-        $consulta = "DELETE FROM tb_usuarios WHERE user_id='$user_id'";
+        $consulta = "DELETE FROM tb_usuarios WHERE user_id = :user_id";
         $resultado = $this->conexion->prepare($consulta);
+        $resultado->bindParam(':user_id', $user_id);
         $resultado->execute();
     }
 
