@@ -77,13 +77,13 @@
                     <div class="col-lg-6">
                     <div class="form-group">
                     <label for="" class="col-form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre">
+                        <input type="text" class="form-control" id="nombre">
                     </div>
                     </div>
                     <div class="col-lg-6">
                     <div class="form-group">
                     <label for="" class="col-form-label">Usuario:</label>
-                    <input type="text" class="form-control" id="username">
+                        <input type="text" class="form-control" id="username">
                     </div> 
                     </div>    
                 </div>
@@ -91,13 +91,13 @@
                     <div class="col-lg-6">
                     <div class="form-group">
                     <label for="" class="col-form-label">No. Nomina</label>
-                    <input type="text" class="form-control" id="nonomina">
+                        <input type="text" class="form-control" id="nonomina">
                     </div>               
                     </div>
                     <div class="col-lg-6">
                     <div class="form-group">
                     <label for="" class="col-form-label">Centro de costos</label>
-                    <input type="text" class="form-control" id="centrocostos">
+                        <input type="text" class="form-control" id="centrocostos">
                     </div>
                     </div>  
                 </div>
@@ -105,13 +105,13 @@
                     <div class="col-lg-9">
                         <div class="form-group">
                         <label for="" class="col-form-label">Correo</label>
-                        <input type="text" class="form-control" id="correo">
+                            <input type="text" class="form-control" id="correo">
                         </div>
                     </div>    
                     <div class="col-lg-3">    
                         <div class="form-group">
                         <label for="" class="col-form-label">estatus</label>
-                        <input type="number" class="form-control" id="estatus">
+                            <input type="number" class="form-control" id="estatus">
                         </div>            
                     </div>    
                 </div>                
@@ -119,13 +119,13 @@
                     <div class="col-lg-9">
                         <div class="form-group">
                         <label for="" class="col-form-label">Centros de trabajo</label>
-                        <input type="text" class="form-control" id="centrotrabajo">
+                            <input type="text" class="form-control" id="centrotrabajo">
                         </div>
                     </div>    
                     <div class="col-lg-3">    
                         <div class="form-group">
                         <label for="" class="col-form-label">Rol</label>
-                        <input type="number" class="form-control" id="rol">
+                            <input type="number" class="form-control" id="rol">
                         </div>            
                     </div>    
                 </div>                
@@ -156,64 +156,98 @@ $(document).ready(function() {
     opcion = 4;
 
     var tablaUsuarios = $('#tablaUsuarios').DataTable({  
-    "ajax": {            
-        "url": "bd/Usuarios.php", 
-        "method": 'POST',
-        "data": {opcion: opcion}, 
-        "dataSrc": ""
-    },
-    "columns": [
-        {"data": "pk_id"},
-        {"data": "nombre"},
-        {"data": "usuario"},
-        {"data": "nonomina"},
-        {"data": "centro_costo"},
-        {"data": "correo"},
-        {"data": "estatus"},
-        {"data": "fk_centros_trabajo"},
-        {"data": "rol"},
-        {"data": "fecha_alta"},
-        {"data": "fecha_baja"},
-        {
-            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='fas fa-edit'></i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='fas fa-trash-alt'></i></button></div></div>"
+        "ajax": {            
+            "url": "bd/Usuarios.php", 
+            "method": 'POST',
+            "data": {opcion: opcion}, 
+            "dataSrc": ""
+        },
+        "columns": [
+            {"data": "pk_id"},
+            {"data": "nombre"},
+            {"data": "usuario"},
+            {"data": "nonomina"},
+            {"data": "centro_costo"},
+            {"data": "correo"},
+            {"data": "estatus"},
+            {"data": "fk_centros_trabajo"},
+            {"data": "rol"},
+            {"data": "fecha_alta"},
+            {"data": "fecha_baja"},
+            {
+                "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='fas fa-edit'></i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='fas fa-trash-alt'></i></button></div></div>"
+            }
+        ],
+        "scrollY": "400px",  // Altura vertical del scroll
+        "scrollX": true,     // Activar el scroll horizontal
+        "scrollCollapse": true,  // Permite colapsar el scroll si la tabla es más pequeña
+        "paging": true,      // Activa la paginación
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json" // Traducción al español (opcional)
         }
-    ],
-    "scrollY": "400px",  // Altura vertical del scroll
-    "scrollX": true,     // Activar el scroll horizontal
-    "scrollCollapse": true,  // Permite colapsar el scroll si la tabla es más pequeña
-    "paging": true,      // Activa la paginación
-    "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json" // Traducción al español (opcional)
+    });
+
+    function marcarCampoInvalido(input) {
+        input.addClass('is-invalid'); // Agrega borde rojo
+        setTimeout(() => input.removeClass('is-invalid'), 3000); // Remueve la clase después de 3 segundos
     }
-});
+
+    function validarCampos() {
+        const campos = ['#nombre', '#username', '#nonomina', '#centrocostos', '#correo', '#estatus', '#centrotrabajo', '#rol'];
+        let camposValidos = true;
+        campos.forEach(campo => {
+            const input = $(campo);
+            if ($.trim(input.val()) === '') {
+                marcarCampoInvalido(input);
+                camposValidos = false; // Algún campo es inválido
+            }
+        });
+        return camposValidos; // Retorna si todos los campos son válidos
+    }
 
 
-    var fila;
-
-    // Submit para el Alta y Actualización
-    $('#formUsuarios').submit(function(e){                         
+    $('#formUsuarios').submit(function(e) {                       
         e.preventDefault();
-        var nombre = $.trim($('#nombre').val());    
+
+        // Validar campos
+        if (!validarCampos()) {
+            return; // No enviar el formulario si algún campo es inválido
+        }
+
+        // Obtener valores de los campos
+        var nombre = $.trim($('#nombre').val());
         var username = $.trim($('#username').val());
-        var nonomina = $.trim($('#nonomina').val());    
-        var centrocostos = $.trim($('#centrocostos').val());    
+        var nonomina = $.trim($('#nonomina').val());
+        var centrocostos = $.trim($('#centrocostos').val());
         var correo = $.trim($('#correo').val());
-        var estatus = $.trim($('#estatus').val());                            
-        var centrotrabajo = $.trim($('#centrotrabajo').val());                            
-        var rol = $.trim($('#rol').val());                            
+        var estatus = $.trim($('#estatus').val());
+        var centrotrabajo = $.trim($('#centrotrabajo').val());
+        var rol = $.trim($('#rol').val());
+
+        // Realizar la petición AJAX
         $.ajax({
             url: "bd/Usuarios.php",
             type: "POST",
-            datatype:"json",    
-            data:  {pk_id:fila_id, nombre:nombre, username:username, nonomina:nonomina, centrocostos:centrocostos, correo:correo, estatus:estatus, centrotrabajo:centrotrabajo, rol:rol, opcion:opcion},    
+            datatype: "json",    
+            data: {
+                pk_id: fila_id, 
+                nombre: nombre, 
+                username: username, 
+                nonomina: nonomina, 
+                centrocostos: centrocostos, 
+                correo: correo, 
+                estatus: estatus, 
+                centrotrabajo: centrotrabajo, 
+                rol: rol, 
+                opcion: opcion
+            },    
             success: function(data) {
                 tablaUsuarios.ajax.reload(null, false);
             }
         });			        
         $('#modalUsuarios').modal('hide');											     			
     });
-        
-    // Para limpiar los campos antes de dar de Alta un Usuario
+
     $("#btnNuevo").click(function(){
         opcion = 1;
         fila_id = null;
@@ -224,19 +258,18 @@ $(document).ready(function() {
         $('#modalUsuarios').modal('show');	    
     });
 
-    // Editar        
     $(document).on("click", ".btnEditar", function(){
         opcion = 2;
         fila = $(this).closest("tr");	        
-        fila_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
-        nombre = fila.find('td:eq(1)').text();
-        username = fila.find('td:eq(2)').text();
-        nonomina = fila.find('td:eq(3)').text();
-        centrocostos = fila.find('td:eq(4)').text();
-        correo = fila.find('td:eq(5)').text();
-        estatus = fila.find('td:eq(6)').text();
-        centrotrabajo = fila.find('td:eq(7)').text();
-        rol = fila.find('td:eq(8)').text();
+        fila_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		    
+        var nombre = fila.find('td:eq(1)').text();
+        var username = fila.find('td:eq(2)').text();
+        var nonomina = fila.find('td:eq(3)').text();
+        var centrocostos = fila.find('td:eq(4)').text();
+        var correo = fila.find('td:eq(5)').text();
+        var estatus = fila.find('td:eq(6)').text();
+        var centrotrabajo = fila.find('td:eq(7)').text();
+        var rol = fila.find('td:eq(8)').text();
         $("#nombre").val(nombre);
         $("#username").val(username);
         $("#nonomina").val(nonomina);
@@ -251,7 +284,6 @@ $(document).ready(function() {
         $('#modalUsuarios').modal('show');		   
     });
 
-    // Borrar
     $(document).on("click", ".btnBorrar", function(){
         fila = $(this);           
         fila_id = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;		
@@ -259,16 +291,16 @@ $(document).ready(function() {
         var respuesta = confirm("¿Está seguro de borrar el registro "+fila_id+"?");                
         if (respuesta) {            
             $.ajax({
-              url: "bd/Usuarios.php",
-              type: "POST",
-              datatype:"json",    
-              data:  {opcion:opcion, pk_id:fila_id},    
-              success: function() {
-                  tablaUsuarios.row(fila.parents('tr')).remove().draw();                  
-               }
+                url: "bd/Usuarios.php",
+                type: "POST",
+                datatype:"json",    
+                data: {opcion:opcion, pk_id:fila_id},    
+                success: function() {
+                    tablaUsuarios.row(fila.parents('tr')).remove().draw();                  
+                }
             });	
         }
-     });
+    });
 });
-  
+
 </script>
