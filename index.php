@@ -15,8 +15,11 @@
     <!--datables estilo bootstrap 4 CSS-->  
     <link rel="stylesheet"  type="text/css" href="assets/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">    
       
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Font Awesome usando CDN -->
+     <!-- Font Awesome local -->
+    <link rel="stylesheet" type="text/css" href="assets/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
     
   <body> 
@@ -27,7 +30,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">            
-            <button id="btnNuevo" type="button" class="btn btn-info" data-toggle="modal"><i class="material-icons">library_add</i></button>    
+            
+            <button id="btnNuevo" type="button" class="btn btn-info" data-toggle="modal">
+    <i class="fas fa-plus"></i>
+</button>
+
             </div>    
         </div>    
     </div>    
@@ -174,7 +181,9 @@ $(document).ready(function() {
             {"data": "rol"},
             {"data": "fecha_alta"},
             {"data": "fecha_baja"},
-            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'>edit</i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='material-icons'>delete</i></button></div></div>"}
+            {
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='fas fa-edit'></i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='fas fa-trash-alt'></i></button></div></div>"
+    }
         ]
     });     
 
