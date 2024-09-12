@@ -163,29 +163,37 @@ $(document).ready(function() {
     opcion = 4;
 
     var tablaUsuarios = $('#tablaUsuarios').DataTable({  
-        "ajax":{            
-            "url": "bd/Usuarios.php", 
-            "method": 'POST',
-            "data":{opcion:opcion}, 
-            "dataSrc":""
-        },
-        "columns":[
-            {"data": "pk_id"},
-            {"data": "nombre"},
-            {"data": "usuario"},
-            {"data": "nonomina"},
-            {"data": "centro_costo"},
-            {"data": "correo"},
-            {"data": "estatus"},
-            {"data": "fk_centros_trabajo"},
-            {"data": "rol"},
-            {"data": "fecha_alta"},
-            {"data": "fecha_baja"},
-            {
-        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='fas fa-edit'></i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='fas fa-trash-alt'></i></button></div></div>"
+    "ajax": {            
+        "url": "bd/Usuarios.php", 
+        "method": 'POST',
+        "data": {opcion: opcion}, 
+        "dataSrc": ""
+    },
+    "columns": [
+        {"data": "pk_id"},
+        {"data": "nombre"},
+        {"data": "usuario"},
+        {"data": "nonomina"},
+        {"data": "centro_costo"},
+        {"data": "correo"},
+        {"data": "estatus"},
+        {"data": "fk_centros_trabajo"},
+        {"data": "rol"},
+        {"data": "fecha_alta"},
+        {"data": "fecha_baja"},
+        {
+            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='fas fa-edit'></i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='fas fa-trash-alt'></i></button></div></div>"
+        }
+    ],
+    "scrollY": "400px",  // Altura vertical del scroll
+    "scrollX": true,     // Activar el scroll horizontal
+    "scrollCollapse": true,  // Permite colapsar el scroll si la tabla es más pequeña
+    "paging": true,      // Activa la paginación
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json" // Traducción al español (opcional)
     }
-        ]
-    });     
+});
+
 
     var fila;
 
