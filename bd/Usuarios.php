@@ -66,8 +66,27 @@ class Usuario {
         $consulta = "SELECT * FROM tb_usuarios";
         $resultado = $this->conexion->prepare($consulta);
         $resultado->execute();
-        return $resultado->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Obtener todos los resultados como un array asociativo
+        $usuarios = $resultado->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Agregar el elemento 'opciones' a cada usuario
+        foreach ($usuarios as &$usuario) {
+            $usuario['opciones'] = "<div class='text-center'>
+                                        <div class='btn-group'>
+                                            <button class='btn btn-primary btn-sm btnEditar'>
+                                                <i class='fas fa-edit'></i>
+                                            </button>
+                                            <button class='btn btn-danger btn-sm btnBorrar'>
+                                                <i class='fas fa-trash-alt'></i>
+                                            </button>
+                                        </div>
+                                    </div>";
+        }
+        
+        return $usuarios;
     }
+    
 
     public function manejarSolicitud($opcion, $data) {
         switch($opcion) {

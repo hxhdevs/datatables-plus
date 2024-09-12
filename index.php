@@ -174,9 +174,7 @@ $(document).ready(function() {
             {"data": "rol"},
             {"data": "fecha_alta"},
             {"data": "fecha_baja"},
-            {
-                "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='fas fa-edit'></i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='fas fa-trash-alt'></i></button></div></div>"
-            }
+            {"data": "opciones"}
         ],
         "scrollY": "400px",  // Altura vertical del scroll
         "scrollX": true,     // Activar el scroll horizontal
