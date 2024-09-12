@@ -23,25 +23,18 @@
   </head>
     
   <body> 
-     <header>
-     <h3 class='text-center'></h3>
-     </header>    
-      
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">            
-            
-            <button id="btnNuevo" type="button" class="btn btn-info" data-toggle="modal">
-    <i class="fas fa-plus"></i>
-</button>
-
-            </div>    
-        </div>    
-    </div>    
-    <br>  
-
+    <header>
+        <h3 class='text-center'></h3>
+    </header>    
     <div class="container caja">
         <div class="row">
+            <!-- Colocando botn de agregar a la derecha -->
+            <div class="col-lg-12 d-flex justify-content-end">  
+                <button id="btnNuevo" type="button" class="btn btn-primary" data-toggle="modal">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>    
+            <!-- Fin del boton -->
             <div class="col-lg-12">
             <div class="table-responsive">        
                 <table id="tablaUsuarios" class="table table-striped table-bordered table-condensed" style="width:100%" >
